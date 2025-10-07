@@ -43,7 +43,6 @@ void DrawMapSelectScene(GameData *game) {
     MapData *map = &game->currentMap;
     ClearBackground(LIGHTGRAY);
     Vector2 mouse = GetMousePosition();
-
     //Go back
     Rectangle buttonBack = {100, 1000, game->buttonWidth, game->buttonHeight};
     Color colorBack = CheckCollisionPointRec(mouse, buttonBack) ? LIGHTGRAY : GRAY;
@@ -65,9 +64,8 @@ void DrawMapSelectScene(GameData *game) {
         DrawText(maps[i].name, x+20, y+15, 20, BLACK);
 
         if (CheckCollisionPointRec(mouse, button) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
-            //selectMapIndex = i;
             game->currentState = STATE_GAME;
-            InitMap(map);
+            InitMap(map, i,game->screenWidth, game->screenHeight);
         }
     }
 }
@@ -105,16 +103,15 @@ void DrawGameScene(GameData *game) {
         if((map->elapsedTime - c->spawnTime) >= c->lifeTime){
             c->active = false;
         }
-        if(c->active && !c->isHit){
+        if(c->active && !c->isHit && map->elapsedTime >= c->spawnTime){
             DrawCircleV(c->position, 40,RED);
-            if (IsKeyPressed(KEY_SPACE)){
-                float dx = GetMouseX() - c->position.x;
-                float dy = GetMouseY() - c->position.y;
-                if(sqrtf(dx*dx + dy*dy)< 40.0f){
-                    c->isHit = true;
-                    c->active = false;
-                    map->circlesHit++;
-                }
+
+            DrawText(c->keyLabel, c->position.x -10, c->position.y -10, 20, BLACK);
+
+            if (IsKeyPressed(c->key)){
+                c->isHit = true;
+                c->active = false;
+                map->circlesHit++;
             }
         }
     }
@@ -123,11 +120,11 @@ void DrawGameScene(GameData *game) {
         StopMusicStream(map->music); // optional
         if(map->isLoaded){ 
             UnloadMusicStream(map->music);
-        map->isLoaded = false;
+            map->isLoaded = false;
+            free(game->currentMap.circle);
         }
         game->currentState = STATE_MAP_END;
     }
-
 }
 
 void DrawMapEndScene(GameData *game){
@@ -146,5 +143,4 @@ void DrawMapEndScene(GameData *game){
         game->currentState = STATE_MAP_SELECT;
     }
 
-    //free(map->circle);
 }

@@ -40,6 +40,11 @@ int main() {
         game.buttonHeight
     };
 
+    
+    int mapCount = 0;
+    
+    totalLoadedMaps= InitAllMaps(maps, mapCount);
+
 
     while (!WindowShouldClose() && !shouldExit) {
         BeginDrawing();

@@ -11,6 +11,8 @@ typedef struct Circle {
     //float HP;
     bool isHit;
     bool active;
+    int key;
+    const char *keyLabel;
 } Circle;
 
 typedef struct MapData {
