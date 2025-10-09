@@ -28,6 +28,6 @@ ${BUILD}scene.o: ${SRC}scene.c ${HEAD}scene.h ${HEAD}utils.h ${HEAD}map_data.h
 	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-		rm main
 		rm -rf ${BUILD}
+		rm main
 	

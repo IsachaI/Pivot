@@ -107,8 +107,10 @@ void DrawGameScene(GameData *game) {
             DrawCircleV(c->position, 40,RED);
 
             DrawText(c->keyLabel, c->position.x -10, c->position.y -10, 20, BLACK);
-
-            if (IsKeyPressed(c->key)){
+            // if (IsKeyPressed(c->key) && !CheckCollisionCircleLine(c->position, 40, center, tip)){ //need fix
+            //     c->active = false;
+            // }
+            if (IsKeyPressed(c->key) && CheckCollisionCircleLine(c->position, 40, center, tip)){
                 c->isHit = true;
                 c->active = false;
                 map->circlesHit++;
@@ -142,5 +144,5 @@ void DrawMapEndScene(GameData *game){
     if(IsKeyPressed(KEY_ENTER)){
         game->currentState = STATE_MAP_SELECT;
     }
-
+    
 }

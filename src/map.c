@@ -15,9 +15,10 @@ MapEntry maps[] = {
 
 const int mapCount = sizeof(maps)/sizeof(maps[0]);
 
-float distances[5] = {100,150,200,250,300};
 int keys[5] = {KEY_Q, KEY_W, KEY_E, KEY_R, KEY_T};
 const char *labels[5] = {"Q", "W", "E", "R", "T"};
+float distances[5] = {100,150,200,250,300};
+
 
 int InitAllMaps(MapEntry maps[], int mapCount){
     for (int i = 0; i<mapCount; i++){
