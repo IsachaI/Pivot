@@ -23,21 +23,19 @@ void DrawSmoothCircleLines(Vector2 center, float radius, Color color, int segmen
 void CleanupMap(MapData *m){
     if (m == NULL) return;
 
-    // Free dynamic circle array if allocated
+    //free circle array
     if (m->circle != NULL) {
         free(m->circle);
         m->circle = NULL;
     }
 
-    // Unload music if loaded
+    // Unload music
     if (m->isLoaded) {
         UnloadMusicStream(m->music);
         m->isLoaded = false;
     }
-
-    // Reset runtime fields so map can be reinitialized safely
+    //reset stats
     m->circlesHit = 0;
     m->elapsedTime = 0.0f;
     m->duration = 0.0f;
-    // keep m->totalCircles as the map definition (do not free scalar fields)
 }
