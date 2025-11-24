@@ -120,11 +120,6 @@ void DrawGameScene(GameData *game) {
 
     if (!IsMusicStreamPlaying(map->music) || map->elapsedTime >= map->duration) {
         StopMusicStream(map->music); // optional
-        if(map->isLoaded){ 
-            UnloadMusicStream(map->music);
-            map->isLoaded = false;
-            free(game->currentMap.circle);
-        }
         game->currentState = STATE_MAP_END;
     }
 }
@@ -143,6 +138,7 @@ void DrawMapEndScene(GameData *game){
 
     if(IsKeyPressed(KEY_ENTER)){
         game->currentState = STATE_MAP_SELECT;
+        CleanupMap(map);
+
     }
-    
 }

@@ -1,6 +1,8 @@
+#include <stdlib.h>
 #include "raylib.h"
 #include "math.h"
 #include "../headers/utils.h"
+#include "../headers/map_data.h"
 
 
 void DrawSmoothCircleLines(Vector2 center, float radius, Color color, int segments)
@@ -15,4 +17,27 @@ void DrawSmoothCircleLines(Vector2 center, float radius, Color color, int segmen
 
         DrawLineV(p1, p2, color);
     }
+}
+
+
+void CleanupMap(MapData *m){
+    if (m == NULL) return;
+
+    // Free dynamic circle array if allocated
+    if (m->circle != NULL) {
+        free(m->circle);
+        m->circle = NULL;
+    }
+
+    // Unload music if loaded
+    if (m->isLoaded) {
+        UnloadMusicStream(m->music);
+        m->isLoaded = false;
+    }
+
+    // Reset runtime fields so map can be reinitialized safely
+    m->circlesHit = 0;
+    m->elapsedTime = 0.0f;
+    m->duration = 0.0f;
+    // keep m->totalCircles as the map definition (do not free scalar fields)
 }
