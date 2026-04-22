@@ -9,8 +9,8 @@
 int totalLoadedMaps = 0;
 MapData allMaps[MAX_MAPS];
 MapEntry maps[] = {
-    {"Map 1", "assets/music1.mp3"},
-    {"Map 2", "assets/music2.mp3"}
+    {"Map 1", "beatmaps/Music1/audio.mp3"},
+    {"Map 2", "beatmaps/Music2/audio.mp3"}
 };
 
 const int mapCount = sizeof(maps)/sizeof(maps[0]);
@@ -34,7 +34,7 @@ int InitAllMaps(MapEntry maps[], int mapCount){
     return totalLoadedMaps;
 }
 
-void InitMap(MapData *map, int mapIndex, int screenWidth, int screenHeight) {
+int InitMap(MapData *map, int mapIndex, int screenWidth, int screenHeight) {
     Vector2 screenCenter = {
         .x = screenWidth /2.0f,
         .y = screenHeight / 2.0f
@@ -45,8 +45,7 @@ void InitMap(MapData *map, int mapIndex, int screenWidth, int screenHeight) {
 
     map->circle = malloc(sizeof(Circle) * map->totalCircles);
     if (!map->circle){
-        fprintf(stderr, "fail\n");
-        return;
+        return 0;
     }
     for (int i = 0; i < map->totalCircles; i++){
 
@@ -57,8 +56,8 @@ void InitMap(MapData *map, int mapIndex, int screenWidth, int screenHeight) {
 
         map->circle[i].position.x = screenCenter.x + cosf(angle) * dist;
         map->circle[i].position.y = screenCenter.y + sinf(angle) * dist;
-        map->circle[i].radius = 30;
 
+        map->circle[i].radius = 30;
         map->circle[i].lifeTime = 2.0f;
         map->circle[i].spawnTime = i* 2.0f;
 
@@ -73,4 +72,5 @@ void InitMap(MapData *map, int mapIndex, int screenWidth, int screenHeight) {
     map->music = LoadMusicStream(maps[mapIndex].musicfile);
     PlayMusicStream(map->music);
     map->duration = GetMusicTimeLength(map->music);
+    return 1;
 }

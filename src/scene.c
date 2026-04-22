@@ -64,7 +64,8 @@ void DrawMapSelectScene(GameData *game) {
         DrawText(maps[i].name, x+20, y+15, 20, BLACK);
 
         if (CheckCollisionPointRec(mouse, button) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
-            game->currentState = STATE_GAME;
+            game->currentState = STATE_GAME; 
+////////////Instead, show map info and if clicked one more time, then change state///////////////////////////////////////////
             InitMap(map, i,game->screenWidth, game->screenHeight);
         }
     }

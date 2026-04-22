@@ -49,7 +49,9 @@ void DrawGameScene(GameData *game);
 
 
 /**
- 
+ @param GameData struct
+
+ @return render the score scene
 */
 void DrawMapEndScene(GameData *game);
 #endif
